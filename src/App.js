@@ -1,23 +1,28 @@
-import logo from './logo.svg';
-import './App.css';
+import "./App.css";
+import React, { useState, useEffect } from "react";
+import { GameLengthButtons } from "./Components/GameLengthButtons";
+import { InfoWidget } from "./Components/InfoWidget";
+import { fetchData } from "./Util/fetchData";
+import { TeamScores } from "./Components/TeamScores";
+import { Nav } from "./Components/Nav";
 
 function App() {
+  const [gameData, setGameData] = useState(null);
+  const [gameLength, setGameLength] = useState("value");
+
+  useEffect(() => {
+    fetchData().then((data) => setGameData(data));
+  }, []);
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+      <TeamScores gameData={gameData} />
+      <Nav />
+      <GameLengthButtons
+        gameLength={gameLength}
+        setGameLength={setGameLength}
+      />
+      <InfoWidget gameData={gameData} gameLength={gameLength} />
     </div>
   );
 }
