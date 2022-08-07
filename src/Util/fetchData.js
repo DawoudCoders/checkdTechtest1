@@ -10,8 +10,10 @@ export const fetchData = () => {
     .then((response) => response.json())
     .then((info) => {
       let data = { teamData: teamdata(info), stats: stats(info) };
-
       return data;
-    });
+    }).catch((err)=>{
+      console.log(err)
+      //could make an error context to display on screen
+    })
 };
 
